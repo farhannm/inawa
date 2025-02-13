@@ -12,7 +12,6 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::get('/', [PagesController::class, 'viewIndex'])->name('index');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
     /* Master Data */
 
     //Penghuni

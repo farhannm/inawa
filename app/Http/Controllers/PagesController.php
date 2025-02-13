@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Penghuni;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -19,7 +21,9 @@ class PagesController extends Controller
     //Any stuff for view Master Data
     public function viewPenghuni()
     {
-        return view('pages/master-data/penghuni/penghuni');
+        $penghunis = Penghuni::paginate(request('perpage', 10));
+
+        return view('pages.master-data.penghuni.penghuni', compact('penghunis'));
     }
 
     public function viewRusun()
