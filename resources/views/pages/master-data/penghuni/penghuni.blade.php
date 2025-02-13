@@ -208,11 +208,11 @@
                             <div class="flex items-center gap-2 order-2 md:order-1">
                                 Show
                                 <select class="select select-sm w-16" name="perpage" onchange="window.location.href='?perpage='+this.value">
-                                    <option value="5" {{ request('perpage', 20) == 5 ? 'selected' : '' }}>5</option>
-                                    <option value="10" {{ request('perpage', 20) == 10 ? 'selected' : '' }}>10</option>
-                                    <option value="20" {{ request('perpage', 20) == 20 ? 'selected' : '' }}>20</option>
-                                    <option value="50" {{ request('perpage', 20) == 50 ? 'selected' : '' }}>50</option>
-                                    <option value="100" {{ request('perpage', 20) == 100 ? 'selected' : '' }}>100</option>
+                                    <option value="5" {{ request('perpage', 10) == 5 ? 'selected' : '' }}>5</option>
+                                    <option value="10" {{ request('perpage', 10) == 10 ? 'selected' : '' }}>10</option>
+                                    <option value="20" {{ request('perpage', 10) == 20 ? 'selected' : '' }}>20</option>
+                                    <option value="50" {{ request('perpage', 10) == 50 ? 'selected' : '' }}>50</option>
+                                    <option value="100" {{ request('perpage', 10) == 100 ? 'selected' : '' }}>100</option>
                                 </select>
                                 per page
                             </div>
