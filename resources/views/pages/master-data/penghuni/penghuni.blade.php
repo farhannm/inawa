@@ -21,19 +21,6 @@
                     <a class="text-gray-700 hover:text-primary" href="{{ route('viewPenghuni') }}">
                         Penghuni
                     </a>
-                    {{-- <span class="text-gray-400 text-sm">
-                        /
-                    </span>
-                    <span class="text-gray-700">
-                        Configuration
-                    </span>
-                    <span class="text-gray-400 text-sm">
-                        /
-                    </span>
-                    <span class="text-gray-900">
-                        Team Settings
-                    </span> --}}
-
                 </div>
             </div>
         </div>
@@ -145,7 +132,7 @@
                                                 <div class="flex items-center gap-2.5">
                                                     <div class="flex flex-col">
                                                         <p class="text-sm font-medium text-gray-900 mb-px">
-                                                            {{ $user->name }}
+                                                            {{ $user->nama }}
                                                         </p>
                                                         <p class="text-2sm text-gray-700 font-normal">
                                                             {{ $user->email }}

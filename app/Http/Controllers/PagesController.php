@@ -2,12 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LokasiTarif;
 use App\Models\User;
 use App\Models\Penghuni;
+use App\Models\Rusun;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class PagesController extends Controller
 {
+
+    public function viewTipe()
+    {
+        $tipes = LokasiTarif::with(['rusun:id_m_rusun,nama_rusun', 'tipe:id_r_tipe_kamar,tipe_kamar'])
+            ->paginate(request('perpage', 10));
+
+        return view('pages.master-data.tipe.tipe', compact('tipes'));
+    }
+
     public function viewIndex()
     {
         return view('pages/index');
@@ -18,7 +33,6 @@ class PagesController extends Controller
         return view('login');
     }
 
-    //Any stuff for view Master Data
     public function viewPenghuni()
     {
         $penghunis = Penghuni::paginate(request('perpage', 10));
@@ -28,12 +42,21 @@ class PagesController extends Controller
 
     public function viewRusun()
     {
-        return view('pages/master-data/rusun/rusun');
+        $rusuns = Rusun::paginate(request('perpage', 10));
+
+        return view('pages/master-data/rusun/rusun', compact('rusuns'));
     }
-    
-    public function viewTipe()
+
+    public function viewAddRusun(Request $request)
     {
-        return view('pages/master-data/tipe/tipe');
+        $kecamatanList = Kecamatan::where('id_r_area_kabkota', 443)->get();
+
+        $kelurahanList = collect();
+        if ($request->has('kecamatan_id')) {
+            $kelurahanList = Kelurahan::where('id_r_area_kecamatan', $request->kecamatan_id)->get();
+        }
+
+        return view('pages/master-data/rusun/add-rusun', compact('kecamatanList', 'kelurahanList'));
     }
 
     public function viewTarif()
@@ -43,7 +66,13 @@ class PagesController extends Controller
 
     public function viewKamar()
     {
-        return view('pages/master-data/kamar/kamar');
+        $m_kamar = DB::table('m_kamar')
+            ->join('r_lokasi_tarif', 'm_kamar.id_r_lokasi_tarif', '=', 'r_lokasi_tarif.id_r_lokasi_tarif')
+            ->join('m_rusun', 'r_lokasi_tarif.id_m_rusun', '=', 'm_rusun.id_m_rusun')
+            ->select('m_kamar.*', 'm_rusun.nama_rusun')
+            ->get();
+
+        return view('m_kamar.index', compact('m_kamar'));
     }
 
     public function viewBank()

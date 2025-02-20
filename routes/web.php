@@ -3,10 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\RusunController;
 use App\Http\Middleware\CheckUserSession;
+use App\Models\Kelurahan;
+use Illuminate\Http\Request;
 
 Route::get('/login', [PagesController::class, 'viewLogin'])->name('viewLogin');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/get-rusun-tipe', [PagesController::class, 'getRusunTipe']);
 
 Route::middleware([CheckUserSession::class])->group(function () {
     Route::get('/', [PagesController::class, 'viewIndex'])->name('index');
@@ -20,6 +24,12 @@ Route::middleware([CheckUserSession::class])->group(function () {
 
     //Rusun
     Route::get('/master-data/rusun', [PagesController::class, 'viewRusun'])->name('viewRusun');
+    Route::get('/master-data/add-rusun', [PagesController::class, 'viewAddRusun'])->name('viewAddRusun');
+    Route::post('/master-data/add-rusun', [RusunController::class, 'store'])->name('store');
+    Route::get('/get-kelurahan', function (Request $request) {
+        return Kelurahan::where('id_r_area_kecamatan', $request->kecamatan_id)->get();
+    })->name('getKelurahan');
+
 
     //Tipe
     Route::get('/master-data/tipe', [PagesController::class, 'viewTipe'])->name('viewTipe');
@@ -37,7 +47,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::get('/master-data/kendaraan', [PagesController::class, 'viewKendaraan'])->name('viewKendaraan');
 
     /* Transaksi */
-    
+
     //Pengajuan
     Route::get('/transaksi/pengajuan', [PagesController::class, 'viewPengajuan'])->name('viewPengajuan');
 
